@@ -136,7 +136,19 @@ class AndroidCamera2AgentImpl extends CameraAgent {
 
     // TODO: Implement
     @Override
-    public void recycle() {}
+    public void recycle() {
+        if (mNoisemaker != null) {
+            mNoisemaker.release();
+        }
+
+        if (mCameraHandlerThread != null) {
+            mCameraHandlerThread.quitSafely();
+        }
+
+        if (mDispatchThread != null) {
+            mDispatchThread.end();
+        }
+    }
 
     // TODO: Some indices may now be invalid; ensure everyone can handle that and update the docs
     @Override
